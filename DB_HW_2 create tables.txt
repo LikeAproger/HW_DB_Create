@@ -1,0 +1,47 @@
+psql CREATE USER user1 with PASSWORD 'pass1';
+
+CREATE DATABASE musicsite WITH OWNER user1;
+
+CREATE TABLE genres (
+	id SERIAL PRIMARY KEY, 
+	name VARCHAR(40) NOT NULL);
+
+CREATE TABLE singers (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(70) NOT NULL,	
+	);
+
+CREATE TABLE GenresSingers (
+    genre_id INTEGER REFERENCES genres(id),
+    singer_id INTEGER REFERENCES singers(id),
+    CONSTRAINT pk PRIMARY KEY (genre_id, singer_id
+    );
+
+CREATE TABLE albums (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(50) NOT NULL,
+	year_of_release INTEGER NOT NULL CHECK(year_of_release >= 1700 and year_of_release <= 2022),	
+	);
+	
+CREATE TABLE SingersAlbums(
+    singer_id INTEGER REFERENCES singers(id)
+    album_id INTEGER REFERENCES albums(id)
+    CONSTRAINT pk PRIMARY KEY (singer_id, album_id)
+    );
+
+CREATE TABLE tracks (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(60) NOT NULL,
+	duration TIME NOT NULL,	
+	);
+
+CREATE TABLE collections (
+    id SERIAL PRIMARY KEY,
+    year_of_release INTEGER NOT NULL CHECK(year_of_release >=1700 and year_of release <= 2022),
+    );
+
+    CREATE TABLE TracksCollections (
+    track_id INTEGER REFERENCES track(id),
+    collection_id INTEGER REFERENCES collections(id),
+    CONSTRAINT pk PRIMARY KEY (track_id, collection_id)
+    );
